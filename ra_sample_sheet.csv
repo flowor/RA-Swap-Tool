@@ -1,0 +1,4 @@
+role,firstName,lastName,nick,cell,email,ext,assign
+RA, Jane, Doe, Jane, 5555555555, jdoe@example.com, 1856, HK-3211
+SRA, Jonathan, Smith, Jon, 5555555554, jsmith@example.com, 1956, BR-4205
+RD, Scott, Brown, Scott, , sbrown@example.com, 2222, ,
