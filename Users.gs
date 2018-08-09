@@ -30,7 +30,7 @@ var Users = new function() {
   };
   
   /**
-   * Returns a user object for a given nickname
+   * Returns a user object for a given nickname, or -1 if not found
    * @param {string} nick - The user's nickname as written in the spreadsheet
    * @returns {User}
    */
