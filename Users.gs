@@ -1,6 +1,6 @@
 var Users = new function() {
   
-  // User Object 
+  // User Object
   var User = function(role, firstName, lastName, nick, cell, email, ext, assign) {
     this.role = role;
     this.firstName = firstName;
@@ -43,5 +43,4 @@ var Users = new function() {
  
     return -1;
   };
-
 };
