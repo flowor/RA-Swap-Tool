@@ -37,7 +37,7 @@ var Swaps = new function() {
    * @param {string} id - The swap's id as written in the spreadsheet
    * @returns {Swap}
    */
-  this.getById = function(id) {
+  this.getIndexById = function(id) {
     
     for (var i=0; i<this.swaps.length; i++) {
       if (this.swaps[i].id == id)
@@ -70,22 +70,106 @@ var Swaps = new function() {
   
    /**
    * Edits the status of a swap and updates timestamp
-   * @param {string} id - id of swap
+   * @param {string} index - index of swap
    * @param {int} status - per STATUS_CODE in Resources.gs: 0 = No Approval, 1 = RA Approval, 2 = RD Approval, 3 = Approved & In calendar
    */
-  this.updateStatus = function(id, status) {
-    var index = this.getById(id);
+  this.updateStatus = function(index, status) {
     var timestamp = new Date().toLocaleString();
     this.swaps[index].status = status;
     this.swaps[index].timestamp = timestamp;
     
     var table = SpreadsheetApp.openById(documentProperties.getProperty('SWAP_DATA_ID')).getSheets()[0]; 
     table.getRange("B"+(index+2)).setValue(timestamp);
-    table.getRange("H"+(index+2)).setValue(status);
+    table.getRange("H"+(index+2)).setValue(status);   
+  };
+  
+  /** 
+   * Approves a swap as an RA
+   * @param {string} index - index of swap
+   * @return {CODE} - Either an error or success code 
+   */
+  this.raApprove = function(index, key) {
+    // Check if key is provided
+    if (key == "")
+      return ERROR_CODE.noKey;
+        
+    // Ensure that swap isn't already approved
+    if (this.swaps[index].status != 0)
+      return ERROR_CODE.alreadyApproved;
     
-    Logger.log(this.swaps[index]);
+    // Ensure that given key is correct
+    if (this.swaps[index].raKey != key)
+      return ERROR_CODE.invalidKey;
+
+    this.updateStatus(index, 1);
+    return SUCCESS_CODE.raApproved;
+        
+  };
+  
+  /** 
+   * Approves a swap as an RD
+   * @param {string} index - index of swap
+   * @return {CODE} - Either an error or success code 
+   */
+  this.rdApprove = function(index, key) {
     
+    if (this.swaps[index].rdKey == key && this.swaps[index].status == 1) {
+      // Key must be correct
+      this.updateStatus(index, 2);
+      return SUCCESS_CODE.rdApproved;
+    }
+    
+    // Check if key is provided
+    if (key == "")
+      return ERROR_CODE.noKey;
+    
+    switch (this.swaps[index].status) {
+      case 0:
+        return ERROR_CODE.awaitRA;
+      case 1:
+        if (this.swaps[index].rdKey != key) // Check for incorrect key
+          return ERROR_CODE.invalidKey;
+      case 2:
+        return ERROR_CODE.alreadyApproved;
+      default:
+        return ERROR_CODE.statusErr;
+    };
+    
+
+    
+        
   };
   
   
+    /** 
+   * Approves a swap as an SRA
+   * @param {string} index - index of swap
+   * @return {CODE} - Either an error or success code 
+   */
+  this.sraApprove = function(index, key) {
+    
+    if (this.swaps[index].sraKey == key && this.swaps[index].status == 2) {
+      // Key must be correct
+      this.updateStatus(index, 3);
+      return SUCCESS_CODE.sraApproved;
+    }
+    
+    // Check if key is provided
+    if (key == "")
+      return ERROR_CODE.noKey;
+    
+    switch (this.swaps[index].status) {
+      case 0:
+        return ERROR_CODE.awaitRA;
+      case 1:
+        return ERROR_CODE.awaitRD;
+      case 2:
+        if (this.swaps[index].sraKey != key)  // Check for incorrect key
+          return ERROR_CODE.invalidKey;
+      case 3:
+        return ERROR_CODE.alreadyApproved;
+      default:
+        return ERROR_CODE.statusErr;
+    };
+  };
 };
