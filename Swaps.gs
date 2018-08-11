@@ -26,7 +26,7 @@ var Swaps = new function() {
 
     for (i=1; i<swap_table.length; i++) {
       // Create a new swap
-      tempswap = new Swap(swap_table[i][0], swap_table[i][1], swap_table[i][2], swap_table[i][3], swap_table[i][4], swap_table[i][5], 
+      tempswap = new Swap(swap_table[i][0], swap_table[i][1], swap_table[i][2], swap_table[i][3], formatDate(swap_table[i][4]), formatDate(swap_table[i][5]), 
                                                         swap_table[i][6], swap_table[i][7], swap_table[i][8], swap_table[i][9], swap_table[i][10]);
       this.swaps.push(tempswap);
     }
@@ -54,17 +54,20 @@ var Swaps = new function() {
    * @param {string} fromDate - Original Duty Date
    * @param {string} toDate - New Duty Date (if applicable)
    * @param {string} comments
+   * @return {int} swap's index
    */
   this.addSwap = function(requester, requested, fromDate, toDate, comments) {
     var sheet = SpreadsheetApp.openById(documentProperties.getProperty('SWAP_DATA_ID')).getSheets()[0];
     var timestamp = new Date().toLocaleString();
     
     // Add swap to local swaps array
-    var tempswap = new Swap(generateKey(), timestamp, requester, requested, fromDate, toDate, comments, 0, generateKey(), generateKey(), generateKey());
+    var tempswap = new Swap(generateKey(), timestamp, requester, requested, formatDate(fromDate), formatDate(toDate), comments, 0, generateKey(), generateKey(), generateKey());
     this.swaps.push(tempswap);
         
     // ADD tempswap to spreadsheet
     sheet.appendRow([tempswap.id, tempswap.timestamp, tempswap.requester, tempswap.requested, tempswap.fromDate, tempswap.toDate, tempswap.comments, tempswap.status, tempswap.raKey, tempswap.rdKey, tempswap.sraKey]);
+    
+    return tempswap;
   };
   
   
@@ -93,6 +96,10 @@ var Swaps = new function() {
     if (this.swaps[index].raKey == key && this.swaps[index].status == 0) {
       // Key must be correct
       this.updateStatus(index, 1);
+      
+      // Notify RD to approve swap
+      Mailer.notify(EMAIL_STATUS.rdApproval, this.swaps[index]);
+      
       return SUCCESS_CODE.raApproved;
     }
     
@@ -122,6 +129,13 @@ var Swaps = new function() {
     if (this.swaps[index].rdKey == key && this.swaps[index].status == 1) {
       // Key must be correct
       this.updateStatus(index, 2);
+      
+      // Notify the SRA to approve the swap
+      Mailer.notify(EMAIL_STATUS.sraApproval, this.swaps[index]);
+      
+      // Notify the RAs that the swap has been approved
+      Mailer.notify(EMAIL_STATUS.approved, this.swaps[index]);
+      
       return SUCCESS_CODE.rdApproved;
     }
     

@@ -23,3 +23,11 @@ var STATUS_CODE = {
   rdApproval: {title: 'Approved By Requested RA & Resident Director', description: 'The swap has been approved by the requested RA and by the Resident Director', status: 0},
   approved: {title: 'Swap Approved', description: 'The swap is approved and processed in the calendar', status: 0}
 };
+
+var EMAIL_STATUS = {
+  view: 0,
+  raApproval: 1,
+  rdApproval: 2,
+  sraApproval: 3,
+  approved: 4
+}

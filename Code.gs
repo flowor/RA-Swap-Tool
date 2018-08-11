@@ -1,3 +1,20 @@
+// DEBUG
+function debug(){  
+  
+  //var i = Swaps.getIndexById("lkkIHdMdeR");
+  //Logger.log(Swaps.sraApprove(i, "lEqsinzblN"));
+}
+// -------
+
+/**
+ * Initializes Users and Swaps Objects
+ */
+function init() {
+  Users.init();
+  Swaps.init();
+}
+
+
 /**
  * Controller
  * Looks for the following parameters: action, id, key
@@ -47,8 +64,9 @@ function doGet(e) {
       
       var code = Swaps.raApprove(index, e.parameter.key);
       
-      if (code.status = 1)
+      if (code.status == 1) {
         return errorPage(code);
+      }
       
       var template = HtmlService.createTemplateFromFile('approve');
       template.index = index;
@@ -72,7 +90,7 @@ function doGet(e) {
       
       var code = Swaps.rdApprove(index, e.parameter.key);
       
-      if (code.status = 1)
+      if (code.status == 1)
         return errorPage(code);
       
       var template = HtmlService.createTemplateFromFile('approve');
@@ -96,7 +114,7 @@ function doGet(e) {
       
       var code = Swaps.sraApprove(index, e.parameter.key);
       
-      if (code.status = 1)
+      if (code.status == 1)
         return errorPage(code);
       
       var template = HtmlService.createTemplateFromFile('approve');

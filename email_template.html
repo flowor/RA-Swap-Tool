@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="application/ld+json">
+    {
+    "@context":       "http://schema.org",
+    "@type":          "EmailMessage"
+    }
+    </script>
+  </head>
+  <body>
+
+
+<? if (status == EMAIL_STATUS.view) { ?>
+
+    <h3>Dear <?=swap.requester?>,</h3>
+    <p>
+      We have recieved your request to have <?=swap.requested?> cover your duty on the following day: <strong><?=swap.fromDate?></strong>
+      <? if (swap.toDate != "") { ?>, in exchange for the following day: <strong><?=swap.toDate?></strong><?}?>. <?=swap.comments?>
+    </p>
+    
+    <p>To check the status of your swap, please click on the following link:</p>
+    <a href="<?=getLink('view', swap)?>"><?=getLink('view', swap)?></a>
+
+<?}?>
+
+<? if (status == EMAIL_STATUS.raApproval) { ?>
+
+    <h3>Dear <?=swap.requested?>,</h3>
+    <p>
+    <?=swap.requester?> has requested for you to take their duty on the following day: <strong><?=swap.fromDate?></strong>
+    <? if (swap.toDate != "") { ?>, and will take your duty day: <strong><?=swap.toDate?></strong> in return<?}?>. <?=swap.comments?></p>
+    
+    <p>To accept this request, please click on the following link:</p>
+    
+    <a href="<?=getLink('ra-approve', swap)?>"><?=getLink('ra-approve', swap)?></a>
+
+<?}?>
+
+<? if (status == EMAIL_STATUS.rdApproval) { ?>
+
+    <h3>Dear RD <?= Users.getRD().nick ?>,</h3>
+    <p>
+    <?=swap.requester?> has requested for <?=swap.requested?> to cover their duty on the following day: <strong><?=swap.fromDate?></strong>
+    <? if (swap.toDate != "") { ?>, and in exchange will take <?=swap.requested?>'s duty day: <strong><?=swap.toDate?></strong><?}?>. <?=swap.comments?></p>
+    
+    
+    <p>Accepting the request will send an email to both RAs informing them of the acceptance, as well as update the duty calendar. To accept this request, please click on the following link:</p>
+    <a href="<?=getLink('rd-approve', swap)?>"><?=getLink('rd-approve', swap)?></a>
+
+<?}?>
+
+<? if (status == EMAIL_STATUS.sraApproval) { ?>
+
+    <h3>Dear SRA <?=Users.getSRA().nick?>,</h3>
+    <p>
+    <?=swap.requester?> has requested that <?=swap.requested?> take their duty on the following day: <strong><?=swap.fromDate?></strong>
+    <? if (swap.toDate != "") { ?>, and in exchange will take <?=swap.requested?>'s duty day: <strong><?=swap.toDate?></strong><?}?>. <?=swap.comments?></p>
+    
+    
+    <p>The Swap Has been approved by the RD. Click the following link once calendar is updated: </p>
+    <a href="<?=getLink('sra-approve', swap)?>"><?=getLink('sra-approve', swap)?></a>
+    
+
+<?}?>
+
+<? if (status == EMAIL_STATUS.approved) { ?>
+    
+    <p>The RD has approved your swap for <strong><?=swap.fromDate?></strong>. To check the status of the swap, please click on the following link:</p>
+    <a href="<?=getLink('view', swap)?>"><?=getLink('view', swap)?></a>
+
+<?}?>
+
+  </body>
+</html>

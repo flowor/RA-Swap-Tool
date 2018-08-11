@@ -43,4 +43,33 @@ var Users = new function() {
  
     return -1;
   };
+  
+  /**
+   * Returns the RD, -1 if not found
+   * @returns {User}
+   */
+  this.getRD = function() {
+    
+    for (var i=0; i<this.users.length; i++) {
+      if (this.users[i].role == 'RD')
+        return this.users[i];
+    }
+ 
+    return -1;
+  };
+  
+  /**
+   * Returns the SRA, -1 if not found
+   * @returns {User}
+   */
+  this.getSRA = function() {
+    
+    for (var i=0; i<this.users.length; i++) {
+      if (this.users[i].role == 'SRA')
+        return this.users[i];
+    }
+ 
+    return -1;
+  };
+  
 };

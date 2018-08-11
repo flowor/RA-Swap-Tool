@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- This CSS package applies Google styling; it should always be included. -->
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <?!= include('Stylesheet'); ?>
+  </head>
+  <body>
+    list
+    <ul>
+    <? 
+      for (var i=0; i<Swaps.swaps.length; i++) {
+        ?>
+        <li><?= Swaps.swaps[i].id ?></li>
+        <?
+      }   
+    ?>
+    </ul>
+  </body>
+</html>
+
+
+
