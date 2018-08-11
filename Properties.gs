@@ -2,13 +2,16 @@
 var scriptProperties = PropertiesService.getScriptProperties();
 var documentProperties = PropertiesService.getDocumentProperties();
 
-// APP Url
-scriptProperties.setProperty('URL', 'https://script.google.com/macros/s/Replace with published url');
+scriptProperties.setProperties({
+  'VIEW_KEY': '', // SHA512 Hashed password
+  'KEY_SIZE': 10
+});
+
 
 // Documents for Storage IDs
 documentProperties.setProperties({
-  'RA_DATA_ID': 'Replace With ID of Spreadsheet containing RA information',
-  'SWAP_DATA_ID': 'Replace with ID of Spreadsheet used to store swaps'
+  'RA_DATA_ID': '',
+  'SWAP_DATA_ID': ''
 });
 
 

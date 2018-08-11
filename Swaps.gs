@@ -89,22 +89,28 @@ var Swaps = new function() {
    * @return {CODE} - Either an error or success code 
    */
   this.raApprove = function(index, key) {
+        
+    if (this.swaps[index].raKey == key && this.swaps[index].status == 0) {
+      // Key must be correct
+      this.updateStatus(index, 1);
+      return SUCCESS_CODE.raApproved;
+    }
+    
     // Check if key is provided
     if (key == "")
       return ERROR_CODE.noKey;
-        
-    // Ensure that swap isn't already approved
-    if (this.swaps[index].status != 0)
-      return ERROR_CODE.alreadyApproved;
     
-    // Ensure that given key is correct
-    if (this.swaps[index].raKey != key)
-      return ERROR_CODE.invalidKey;
-
-    this.updateStatus(index, 1);
-    return SUCCESS_CODE.raApproved;
-        
-  };
+    switch (this.swaps[index].status) {
+      case 0:
+        if (this.swaps[index].raKey != key) // Check for incorrect key
+          return ERROR_CODE.invalidKey;
+      case 1:
+      case 2:
+        return ERROR_CODE.alreadyApproved;
+      default:
+        return ERROR_CODE.statusErr;
+    }; 
+};
   
   /** 
    * Approves a swap as an RD
@@ -133,15 +139,11 @@ var Swaps = new function() {
         return ERROR_CODE.alreadyApproved;
       default:
         return ERROR_CODE.statusErr;
-    };
-    
-
-    
-        
+    };  
   };
   
   
-    /** 
+  /** 
    * Approves a swap as an SRA
    * @param {string} index - index of swap
    * @return {CODE} - Either an error or success code 
