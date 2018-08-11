@@ -3,7 +3,7 @@ var ERROR_CODE = {
   noViewKey: {title: 'No Key Provided', description: 'In order to view all swaps, a valid key must be provided.', status: 1},
   invalidViewKey: {title: 'Invalid Key', description: 'The key you\'ve provided to view all swaps is invalid.', status: 1},
   invalidKey: {title: 'Invalid Key', description: 'The key you\'ve provided to approve this swap is invalid.', status: 1},
-  alreadyApproved: {title: 'Swap Already Approved', description: 'You have already approved this swap.'},
+  alreadyApproved: {title: 'Swap Already Approved', description: 'You have already approved this swap.', status: 1},
   awaitRA: {title: 'Awaiting RA Approval', description: 'The swap is not yet approved by the requested RA. Please wait for them to accept before approving.', status: 1},
   awaitRD: {title: 'Awaiting RD Approval', description: 'The swap is not yet approved by the resident director. Please wait for them to approve before approving.', status: 1},
   statusErr: {title: 'Status Error', description: 'Specified status is not valid.', status: 1},
