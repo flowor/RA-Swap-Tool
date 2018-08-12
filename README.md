@@ -1,5 +1,4 @@
 # RA Swap Tool
-## Currently in development
 Resident assistant duty day swap tool.
 
 The RA swap tool makes the process of requesting a swap and getting it approved much eaiser. It uses Google Apps Script to integrate with Google Forms, Sheets, and Gmail, in order to:
