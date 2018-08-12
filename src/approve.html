@@ -7,11 +7,35 @@
     <?!= include('Stylesheet'); ?>
   </head>
   <body>
-    approve
-    <h2>Success: <?= message.title ?></h2>
-    <h4><?= message.description ?></h4>
+  <header>
+    <h1>SwapTool</h1>
+    <h2>Hickory Birch</h2>
+  
+  </header>
+  
+  <section class="content">
+  
+  <div class="title">
+  <h3><?=message.title?></h3>
+  <p><?=message.description?></p>
+  </div>
+  
+  <ul class="detail">
+    
+    
+    <li><span class="dark">Requester: </span><?=Swaps.swaps[index].requester?><? if (Swaps.swaps[index].toDate != "") {?> requesting a change to <?=Swaps.swaps[index].toDate?><?}?></li>
+    <li><span class="dark">Requested: </span><?=Swaps.swaps[index].requested?> requesting a change to <?=Swaps.swaps[index].fromDate?></li>
+    
+    
+    <? if (Swaps.swaps[index].comments != "") {?>
+    <li><span class="dark">Comments: </span><?=Swaps.swaps[index].comments?></li>
+    <?}?>
+    
+    <li><span class="dull">Last updated on <?=Swaps.swaps[index].timestamp?></span></li>
+    <li><span class="dull">id: <?=Swaps.swaps[index].id?></span></li>
+    
+    </ul>
+   </section>
   </body>
 </html>
-
-
 

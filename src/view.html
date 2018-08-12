@@ -5,11 +5,39 @@
     <!-- This CSS package applies Google styling; it should always be included. -->
     <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
     <?!= include('Stylesheet'); ?>
+    <title>View Swap: <?=Swaps.swaps[index].id?></title>
   </head>
   <body>
-    view
-    <?= Swaps.swaps[index].id ?>
-  </body>
+  <header>
+    <h1>SwapTool</h1>
+    <h2>Hickory Birch</h2>
+  
+  </header>
+  
+  <section class="content">
+  
+  <div class="title">
+  <h3>Status: <?=STATUS_CODE[Object.keys(STATUS_CODE)[Swaps.swaps[index].status]].title?></h3>
+  <p><?=STATUS_CODE[Object.keys(STATUS_CODE)[Swaps.swaps[index].status]].description?></p>
+  </div>
+  
+  <ul class="detail">
+    
+    
+    <li>Requester: <span class="dark"><?=Swaps.swaps[index].requester?></span><? if (Swaps.swaps[index].toDate != "") {?> requesting a change to <?=Swaps.swaps[index].toDate?><?}?></li>
+    <li>Requested: <span class="dark"><?=Swaps.swaps[index].requested?><span> requesting a change to <?=Swaps.swaps[index].fromDate?></li>
+    
+    
+    <? if (Swaps.swaps[index].comments != "") {?>
+    <li>Comments: <span class="dark"><?=Swaps.swaps[index].comments?></span></li>
+    <?}?>
+    
+    <li><span class="dull">Last updated on <?=Swaps.swaps[index].timestamp?></span></li>
+    <li><span class="dull">id: <?=Swaps.swaps[index].id?></span></li>
+    
+    </ul>
+   </section>
+</body>
 </html>
 
 
