@@ -1,6 +1,5 @@
 # RA Swap Tool
-Resident assistant duty day swap tool. Todo: make a version for office 365 calendar.
-
+Resident assistant duty day swap tool
 The RA swap tool makes the process of requesting a swap and getting it approved more organized. It uses Google Apps Script to integrate with Google Forms, Sheets, and Gmail, in order to:
 
 1. Collect swap request
